@@ -1,0 +1,12 @@
+demo_lightdash_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: 195.12.114.20
+      port: 8000
+      user: maksat.k
+      password: '692132'
+      dbname: lightdash
+      schema: public
+      threads: 7

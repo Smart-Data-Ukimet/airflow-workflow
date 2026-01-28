@@ -1,0 +1,11 @@
+models:
+  - name: sales_by_country
+    description: Sum of sales by country.
+
+    columns:
+      - name: country
+        data_type: string
+        description: Country name.
+      - name: sales_sum
+        data_type: float8
+        description: Sum of sales.

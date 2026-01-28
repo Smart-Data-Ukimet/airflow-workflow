@@ -1,0 +1,4 @@
+sources:
+  - name: public
+    tables:
+      - name: sales_data_test
