@@ -63,7 +63,7 @@ with DAG(
         op_kwargs={
             "src_table": "public.sales_data_test",
             "dst_table": "public.sales_data_test_hist",
-            "postgres_conn_id": "postgres_222_117",
+            "postgres_conn_id": "postgres_114_20",
             "batch_size": 1000,
         },
     )
