@@ -39,8 +39,7 @@ def load_csv_to_postgres(
     """
 
     # COPY FROM STDIN reads bytes, so open in binary mode
-    with open(csv_path, "rb") as f:
-        hook.copy_expert(sql=copy_sql, filename=csv_path)
+    hook.copy_expert(sql=copy_sql, filename=csv_path)
 
     # Optional: log count
     cnt = hook.get_first(f"SELECT COUNT(*) FROM {table_fqn};")[0]
