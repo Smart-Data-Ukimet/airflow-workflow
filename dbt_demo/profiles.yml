@@ -3,7 +3,7 @@ demo_lightdash_dbt:
   outputs:
     dev:
       type: postgres
-      host: 195.12.114.20
+      host: 195.12.222.117
       port: 8000
       user: maksat.k
       password: '692132'
