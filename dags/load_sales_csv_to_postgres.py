@@ -62,7 +62,7 @@ with DAG(
         op_kwargs={
             "postgres_conn_id": "postgres_k8s",
             "table_fqn": "demo.sales_data_test",
-            "csv_relative_path": "data/sales_data_test.csv",
+            "csv_relative_path": "data/sales_data_sample.csv",
             "delimiter": ",",
             "has_header": True,
             "truncate_before_load": True,              # set True if you want full refresh
