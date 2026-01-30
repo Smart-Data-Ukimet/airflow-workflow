@@ -7,17 +7,18 @@ import pandas as pd
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from psycopg2.extras import execute_values
 
 
-def load_csv_df_to_postgres(
+def load_csv_df_to_postgres_no_sqlalchemy(
     postgres_conn_id: str,
     table_fqn: str,
     csv_relative_path: str,
     truncate_before_load: bool = False,
+    chunk_size: int = 5000,
 ) -> None:
     """
-    Read CSV into pandas DataFrame and insert into Postgres.
-    No COPY, no STDIN, no Postgres filesystem access.
+    Read CSV into pandas DataFrame and insert into Postgres using psycopg2 cursor.
     """
 
     # Resolve CSV path relative to this DAG file
@@ -27,37 +28,50 @@ def load_csv_df_to_postgres(
     if not os.path.exists(csv_path):
         raise FileNotFoundError(f"CSV file not found at: {csv_path}")
 
-    # 1) Read CSV
+    schema, table = table_fqn.split(".", 1)
+
+    # Read CSV (keep strings as-is to avoid surprises)
     df = pd.read_csv(csv_path)
 
     if df.empty:
         print("CSV is empty. Nothing to load.")
         return
 
-    # 2) Get SQLAlchemy engine from Airflow connection
+    # Replace NaN with None so psycopg2 inserts NULL
+    df = df.where(pd.notnull(df), None)
+
+    cols = list(df.columns)
+    col_list_sql = ", ".join([f'"{c}"' for c in cols])  # quote column names safely
+
+    insert_sql = f'INSERT INTO "{schema}"."{table}" ({col_list_sql}) VALUES %s'
+
     hook = PostgresHook(postgres_conn_id=postgres_conn_id)
-    engine = hook.get_sqlalchemy_engine()
 
-    schema, table = table_fqn.split(".")
-
-    # 3) Optional truncate
+    # Optional truncate
     if truncate_before_load:
-        hook.run(f"TRUNCATE TABLE {table_fqn};")
+        hook.run(f'TRUNCATE TABLE "{schema}"."{table}";')
 
-    # 4) Insert data
-    df.to_sql(
-        name=table,
-        con=engine,
-        schema=schema,
-        if_exists="append",
-        index=False,
-        method="multi",      # batches INSERTs
-        chunksize=1000,      # tune if needed
-    )
+    rows_total = 0
+    conn = hook.get_conn()
+    try:
+        with conn.cursor() as cur:
+            # chunked insert
+            for start in range(0, len(df), chunk_size):
+                chunk = df.iloc[start : start + chunk_size]
+                values = [tuple(x) for x in chunk.to_numpy()]
+                execute_values(cur, insert_sql, values, page_size=min(chunk_size, 10000))
+                rows_total += len(chunk)
 
-    # 5) Log row count
-    cnt = hook.get_first(f"SELECT COUNT(*) FROM {table_fqn};")[0]
-    print(f"Loaded {len(df)} rows into {table_fqn}. Total rows now: {cnt}")
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+    # Log row count
+    cnt = hook.get_first(f'SELECT COUNT(*) FROM "{schema}"."{table}";')[0]
+    print(f"Loaded {rows_total} rows into {schema}.{table}. Total rows now: {cnt}")
 
 
 with DAG(
@@ -66,16 +80,17 @@ with DAG(
     schedule=None,
     catchup=False,
     tags=["postgres", "csv", "pandas"],
-    description="Load CSV into demo.sales_data_test using pandas DataFrame",
+    description="Load CSV into demo.sales_data_test using pandas DataFrame (no SQLAlchemy)",
 ) as dag:
 
     load_task = PythonOperator(
         task_id="load_csv_via_dataframe",
-        python_callable=load_csv_df_to_postgres,
+        python_callable=load_csv_df_to_postgres_no_sqlalchemy,
         op_kwargs={
             "postgres_conn_id": "postgres_k8s",
-            "table_fqn": "demo.sales_data_test",
+            "table_fqn": "demo.sales_data_test",   # убедись что схема demo существует
             "csv_relative_path": "data/sales_data_sample.csv",
             "truncate_before_load": True,
+            "chunk_size": 5000,
         },
     )
