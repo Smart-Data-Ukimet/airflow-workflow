@@ -36,6 +36,9 @@ def load_csv_df_to_postgres_no_sqlalchemy(
     if df.empty:
         print("CSV is empty. Nothing to load.")
         return
+    
+    if "Unnamed: 0" in df.columns:
+        df = df.drop(columns=["Unnamed: 0"])
 
     # Replace NaN with None so psycopg2 inserts NULL
     df = df.where(pd.notnull(df), None)
@@ -50,6 +53,8 @@ def load_csv_df_to_postgres_no_sqlalchemy(
     # Optional truncate
     if truncate_before_load:
         hook.run(f'TRUNCATE TABLE "{schema}"."{table}";')
+
+    print("CSV columns:", list(df.columns))
 
     rows_total = 0
     conn = hook.get_conn()
