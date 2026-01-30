@@ -31,7 +31,7 @@ def load_csv_df_to_postgres_no_sqlalchemy(
     schema, table = table_fqn.split(".", 1)
 
     # Read CSV (keep strings as-is to avoid surprises)
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path, encoding='latin1')
 
     if df.empty:
         print("CSV is empty. Nothing to load.")
