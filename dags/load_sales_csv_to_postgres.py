@@ -37,6 +37,8 @@ def load_csv_df_to_postgres_no_sqlalchemy(
         print("CSV is empty. Nothing to load.")
         return
     
+    df.columns = df.columns.str.strip().str.lower()
+
     if "Unnamed: 0" in df.columns:
         df = df.drop(columns=["Unnamed: 0"])
 
