@@ -2,11 +2,10 @@ demo_lightdash_dbt:
   target: dev
   outputs:
     dev:
-      type: postgres
-      host: 195.12.114.20
-      port: 8000
-      user: maksat.k
-      password: '692132'
-      dbname: lightdash
-      schema: public
+      type: clickhouse
+      host: 192.168.246.39
+      port: 9000
+      user: default
+      password: 'Fkvfns@@2025'
+      schema: demo
       threads: 7
