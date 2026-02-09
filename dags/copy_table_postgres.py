@@ -50,7 +50,7 @@ def copy_table_rows(
 
 with DAG(
     dag_id="copy_table_postgres",
-    start_date=datetime(2025, 1, 29),
+    start_date=datetime(2025, 1, 30),
     schedule="0 22 * * *",
     description="Select data from one table and insert into another using Airflow Connection",
     tags=["test", "postgres"],
@@ -61,9 +61,9 @@ with DAG(
         task_id="copy_src_to_dst",
         python_callable=copy_table_rows,
         op_kwargs={
-            "src_table": "public.sales_data_test",
-            "dst_table": "public.sales_data_test_hist",
-            "postgres_conn_id": "postgres_114_20",
+            "src_table": "demo.sales_data_test",
+            "dst_table": "demo.sales_data_test_hist",
+            "postgres_conn_id": "postgres_k8s",
             "batch_size": 1000,
         },
     )

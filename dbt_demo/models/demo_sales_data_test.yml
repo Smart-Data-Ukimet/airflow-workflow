@@ -1,0 +1,57 @@
+models:
+  - name: sales_by_country
+    description: Sum of sales by country.
+
+    columns:
+      - name: order_number
+        description: order_number
+      - name: quantity_ordered
+        description: quantity_ordered
+      - name: price_each
+        description: price_each
+      - name: order_linenumber
+        description: order_linenumber
+      - name: sales
+        description: sales
+      - name: order_date
+        description: order_date
+      - name: status
+        description: status
+      - name: qtr_id
+        description: qtr_id
+      - name: month_id
+        description: month_id
+      - name: year_id
+        description: year_id
+      - name: product_line
+        description: product_line
+      - name: msrp
+        description: msrp
+      - name: product_code
+        description: product_code
+      - name: customer_name
+        description: customer_name
+      - name: phone
+        description: phone
+      - name: address_line_1
+        description: address_line_1
+      - name: address_line_2
+        description: address_line_2
+      - name: city
+        description: city
+      - name: state
+        description: state
+      - name: postal_code
+        description: postal_code
+      - name: country
+        description: country
+      - name: territory
+        description: territory
+      - name: contact_lastname
+        description: contact_lastname
+      - name: contact_firstname
+        description: contact_firstname
+      - name: deal_size
+        description: deal_size
+      - name: load_date
+        description: load_date

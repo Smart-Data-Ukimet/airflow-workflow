@@ -1,4 +1,4 @@
 sources:
-  - name: public
+  - name: demo
     tables:
       - name: sales_data_test
