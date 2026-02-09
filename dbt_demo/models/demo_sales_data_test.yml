@@ -1,6 +1,6 @@
 models:
-  - name: sales_by_country
-    description: Sum of sales by country.
+  - name: demo_sales_data_test
+    description: demo_sales_data_test
 
     columns:
       - name: order_number
