@@ -5,53 +5,156 @@ models:
     columns:
       - name: order_number
         description: order_number
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: quantity_ordered
         description: quantity_ordered
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: price_each
         description: price_each
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: order_linenumber
         description: order_linenumber
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: sales
         description: sales
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: order_date
         description: order_date
+        config:
+          meta:
+            dimension: { type: timestamp }
+
       - name: status
         description: status
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: qtr_id
         description: qtr_id
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: month_id
         description: month_id
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: year_id
         description: year_id
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: product_line
         description: product_line
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: msrp
         description: msrp
+        config:
+          meta:
+            dimension: { type: number }
+
       - name: product_code
         description: product_code
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: customer_name
         description: customer_name
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: phone
         description: phone
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: address_line_1
         description: address_line_1
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: address_line_2
         description: address_line_2
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: city
         description: city
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: state
         description: state
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: postal_code
         description: postal_code
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: country
         description: country
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: territory
         description: territory
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: contact_lastname
         description: contact_lastname
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: contact_firstname
         description: contact_firstname
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: deal_size
         description: deal_size
+        config:
+          meta:
+            dimension: { type: string }
+
       - name: load_date
         description: load_date
+        config:
+          meta:
+            dimension: { type: timestamp }
