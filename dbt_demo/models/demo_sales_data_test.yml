@@ -3,55 +3,171 @@ models:
     description: demo_sales_data_test
 
     columns:
+
+      # ------------------
+      # Numeric (Int64)
+      # ------------------
       - name: order_number
         description: order_number
+        meta:
+          dimension:
+            type: number
+
       - name: quantity_ordered
         description: quantity_ordered
-      - name: price_each
-        description: price_each
+        meta:
+          dimension:
+            type: number
+
       - name: order_linenumber
         description: order_linenumber
-      - name: sales
-        description: sales
-      - name: order_date
-        description: order_date
-      - name: status
-        description: status
+        meta:
+          dimension:
+            type: number
+
       - name: qtr_id
         description: qtr_id
+        meta:
+          dimension:
+            type: number
+
       - name: month_id
         description: month_id
+        meta:
+          dimension:
+            type: number
+
       - name: year_id
         description: year_id
-      - name: product_line
-        description: product_line
+        meta:
+          dimension:
+            type: number
+
       - name: msrp
         description: msrp
-      - name: product_code
-        description: product_code
-      - name: customer_name
-        description: customer_name
-      - name: phone
-        description: phone
-      - name: address_line_1
-        description: address_line_1
-      - name: address_line_2
-        description: address_line_2
-      - name: city
-        description: city
-      - name: state
-        description: state
-      - name: postal_code
-        description: postal_code
-      - name: country
-        description: country
-      - name: territory
-        description: territory
-      - name: contact_lastname
-        description: contact_lastname
-      - name: contact_firstname
-        description: contact_firstname
-      - name: deal_size
-        description: deal_size
+        meta:
+          dimension:
+            type: number
+
+      # ------------------
+      # Numeric (Float64)
+      # ------------------
+      - name: price_each
+        description: price_each
+        meta:
+          dimension:
+            type: number
+
+      - name: sales
+        description: sales
+        meta:
+          dimension:
+            type: number
+
+      # ------------------
+      # Dates
+      # ------------------
+      - name: order_date
+        description: order_date
+        meta:
+          dimension:
+            type: timestamp
+
       - name: load_date
         description: load_date
+        meta:
+          dimension:
+            type: timestamp
+
+      # ------------------
+      # Strings
+      # ------------------
+      - name: status
+        description: status
+        meta:
+          dimension:
+            type: string
+
+      - name: product_line
+        description: product_line
+        meta:
+          dimension:
+            type: string
+
+      - name: product_code
+        description: product_code
+        meta:
+          dimension:
+            type: string
+
+      - name: customer_name
+        description: customer_name
+        meta:
+          dimension:
+            type: string
+
+      - name: phone
+        description: phone
+        meta:
+          dimension:
+            type: string
+
+      - name: address_line_1
+        description: address_line_1
+        meta:
+          dimension:
+            type: string
+
+      - name: address_line_2
+        description: address_line_2
+        meta:
+          dimension:
+            type: string
+
+      - name: city
+        description: city
+        meta:
+          dimension:
+            type: string
+
+      - name: state
+        description: state
+        meta:
+          dimension:
+            type: string
+
+      - name: postal_code
+        description: postal_code
+        meta:
+          dimension:
+            type: string
+
+      - name: country
+        description: country
+        meta:
+          dimension:
+            type: string
+
+      - name: territory
+        description: territory
+        meta:
+          dimension:
+            type: string
+
+      - name: contact_lastname
+        description: contact_lastname
+        meta:
+          dimension:
+            type: string
+
+      - name: contact_firstname
+        description: contact_firstname
+        meta:
+          dimension:
+            type: string
+
+      - name: deal_size
+        description: deal_size
+        meta:
+          dimension:
+            type: string
